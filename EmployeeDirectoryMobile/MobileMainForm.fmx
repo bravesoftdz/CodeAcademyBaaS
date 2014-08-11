@@ -1,0 +1,332 @@
+object frmMobileMain: TfrmMobileMain
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 460
+  ClientWidth = 320
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMobile = True
+  DesignerWidth = 320
+  DesignerHeight = 480
+  DesignerDeviceName = 'iPhone'
+  DesignerOrientation = 0
+  DesignerOSVersion = '7'
+  object tabctrlMain: TTabControl
+    Align = Client
+    FullSize = True
+    Height = 460.000000000000000000
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = Bottom
+    Width = 320.000000000000000000
+    object tabitmAccount: TTabItem
+      CustomIcon = <
+        item
+        end>
+      Height = 49.000000000000000000
+      IsSelected = True
+      TabOrder = 0
+      Text = #44228#51221
+      Width = 160.000000000000000000
+      object ToolBar2: TToolBar
+        Height = 44.000000000000000000
+        TabOrder = 0
+        Width = 320.000000000000000000
+        object Label2: TLabel
+          Align = Contents
+          Height = 44.000000000000000000
+          TextSettings.HorzAlign = Center
+          Text = 'Employee Directory'
+          Width = 320.000000000000000000
+        end
+        object btnLoginBack: TButton
+          Align = Left
+          Height = 44.000000000000000000
+          StyleLookup = 'arrowlefttoolbutton'
+          TabOrder = 1
+          Text = 'Go to '#47196#44536#51064
+          Width = 44.000000000000000000
+          OnClick = btnLoginBackClick
+        end
+      end
+      object tabctrlLogin: TTabControl
+        Align = Client
+        FullSize = True
+        Height = 367.000000000000000000
+        TabHeight = 49.000000000000000000
+        TabIndex = 0
+        TabOrder = 1
+        TabPosition = Bottom
+        Width = 320.000000000000000000
+        OnChange = tabctrlLoginChange
+        object tabitmAccountLogin: TTabItem
+          CustomIcon = <
+            item
+            end>
+          Height = 49.000000000000000000
+          IsSelected = True
+          TabOrder = 0
+          Text = #47196#44536#51064
+          Width = 160.000000000000000000
+          object ListBox1: TListBox
+            Align = Client
+            Height = 318.000000000000000000
+            TabOrder = 0
+            Width = 320.000000000000000000
+            DefaultItemStyles.ItemStyle = 'listboxitemnodetail'
+            DefaultItemStyles.GroupHeaderStyle = ''
+            DefaultItemStyles.GroupFooterStyle = ''
+            object ListBoxItem1: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 0
+              Text = 'Username: '
+              Width = 320.000000000000000000
+              object edtLoginUsername: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 0
+                Width = 194.000000000000000000
+                Height = 30.000000000000000000
+                Margins.Left = 120.000000000000000000
+                Margins.Top = 6.000000000000000000
+                Margins.Right = 6.000000000000000000
+                Margins.Bottom = 6.000000000000000000
+              end
+            end
+            object ListBoxItem2: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 44.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 1
+              Text = #48708#48128#48264#54840': '
+              Width = 320.000000000000000000
+              object edtLoginPassword: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 0
+                Width = 194.000000000000000000
+                Height = 30.000000000000000000
+                Margins.Left = 120.000000000000000000
+                Margins.Top = 6.000000000000000000
+                Margins.Right = 6.000000000000000000
+                Margins.Bottom = 6.000000000000000000
+              end
+            end
+            object ListBoxItem3: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 88.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 2
+              Width = 320.000000000000000000
+              object FlowLayout1: TFlowLayout
+                Align = Client
+                Height = 44.000000000000000000
+                Width = 320.000000000000000000
+                TabOrder = 0
+                Justify = Center
+                JustifyLastLine = Center
+                FlowDirection = LeftToRight
+                object btnLoginGotoRegister: TButton
+                  Height = 44.000000000000000000
+                  Position.X = 70.000000000000000000
+                  StyleLookup = 'toolbutton'
+                  TabOrder = 1
+                  Text = #54924#50896#44032#51077
+                  Width = 90.000000000000000000
+                  OnClick = btnLoginGotoRegisterClick
+                end
+                object edtLoginExec: TButton
+                  Height = 44.000000000000000000
+                  Position.X = 160.000000000000000000
+                  StyleLookup = 'toolbutton'
+                  TabOrder = 0
+                  Text = #47196#44536#51064
+                  Width = 90.000000000000000000
+                  OnClick = edtLoginExecClick
+                end
+              end
+            end
+            object ListBoxItem4: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 132.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 3
+              Width = 320.000000000000000000
+              object lblLoginForgotPassword: TLabel
+                Align = Contents
+                Height = 44.000000000000000000
+                HitTest = True
+                TextSettings.HorzAlign = Center
+                Text = #48708#48128#48264#54840#47484' '#51082#51004#49512#45208#50836'?'
+                Width = 320.000000000000000000
+                OnClick = lblLoginForgotPasswordClick
+              end
+            end
+          end
+        end
+        object tabitmAccountRegister: TTabItem
+          CustomIcon = <
+            item
+            end>
+          Height = 49.000000000000000000
+          IsSelected = False
+          TabOrder = 0
+          Text = #54924#50896#44032#51077
+          Width = 160.000000000000000000
+          object ListBox2: TListBox
+            Align = Client
+            Height = 318.000000000000000000
+            TabOrder = 0
+            Width = 320.000000000000000000
+            DefaultItemStyles.ItemStyle = 'listboxitemnodetail'
+            DefaultItemStyles.GroupHeaderStyle = ''
+            DefaultItemStyles.GroupFooterStyle = ''
+            object ListBoxItem5: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 0
+              Text = 'Username: '
+              Width = 320.000000000000000000
+              object edtRegisterUsername: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 0
+                Width = 194.000000000000000000
+                Height = 32.000000000000000000
+                Margins.Left = 120.000000000000000000
+                Margins.Top = 6.000000000000000000
+                Margins.Right = 6.000000000000000000
+                Margins.Bottom = 6.000000000000000000
+              end
+            end
+            object ListBoxItem6: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 44.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 1
+              Text = #48708#48128#48264#54840': '
+              Width = 320.000000000000000000
+              object edtRegisterPassword: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 0
+                Width = 194.000000000000000000
+                Height = 32.000000000000000000
+                Margins.Left = 120.000000000000000000
+                Margins.Top = 6.000000000000000000
+                Margins.Right = 6.000000000000000000
+                Margins.Bottom = 6.000000000000000000
+              end
+            end
+            object ListBoxItem7: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 88.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 2
+              Text = #49324#50857#51088#47749':'
+              Width = 320.000000000000000000
+              object edtRegisterFullname: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 0
+                Width = 194.000000000000000000
+                Height = 32.000000000000000000
+                Margins.Left = 120.000000000000000000
+                Margins.Top = 6.000000000000000000
+                Margins.Right = 6.000000000000000000
+                Margins.Bottom = 6.000000000000000000
+              end
+            end
+            object ListBoxItem8: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 132.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 3
+              Text = #51060#47700#51068#51452#49548':'
+              Width = 320.000000000000000000
+              object edtRegisterEmail: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 0
+                Width = 194.000000000000000000
+                Height = 32.000000000000000000
+                Margins.Left = 120.000000000000000000
+                Margins.Top = 6.000000000000000000
+                Margins.Right = 6.000000000000000000
+                Margins.Bottom = 6.000000000000000000
+              end
+            end
+            object ListBoxItem9: TListBoxItem
+              Selectable = False
+              Height = 44.000000000000000000
+              Position.Y = 176.000000000000000000
+              StyleLookup = 'listboxitemnodetail'
+              TabOrder = 4
+              Width = 320.000000000000000000
+              object btnRegisterExec: TButton
+                Align = Center
+                Height = 44.000000000000000000
+                TabOrder = 0
+                Text = #54924#50896#44032#51077
+                Width = 73.000000000000000000
+                OnClick = btnRegisterExecClick
+              end
+            end
+          end
+        end
+      end
+    end
+    object tabItmEmployee: TTabItem
+      CustomIcon = <
+        item
+        end>
+      Height = 49.000000000000000000
+      IsSelected = False
+      TabOrder = 0
+      Text = #49324#50896#51221#48372
+      Width = 160.000000000000000000
+      object ToolBar1: TToolBar
+        Height = 44.000000000000000000
+        TabOrder = 0
+        Width = 320.000000000000000000
+        object Label1: TLabel
+          Align = Contents
+          Height = 44.000000000000000000
+          TextSettings.HorzAlign = Center
+          Text = #49324#50896#51221#48372
+          Width = 320.000000000000000000
+        end
+        object btnLogout: TButton
+          Align = Right
+          Height = 44.000000000000000000
+          Position.X = 240.000000000000000000
+          StyleLookup = 'toolbutton'
+          TabOrder = 1
+          Text = #47196#44536#50500#50883
+          Width = 80.000000000000000000
+          OnClick = btnLogoutClick
+        end
+      end
+    end
+  end
+  object ActionList1: TActionList
+    Left = 264
+    Top = 296
+    object ChangeTabAction: TChangeTabAction
+      Category = 'Tab'
+    end
+  end
+end
