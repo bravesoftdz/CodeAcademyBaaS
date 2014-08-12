@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F7592540-A8E7-463C-841D-2170EE01AC59}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="EmployeeDirectoryMobile\EmployeeDirectoryMobile.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="EmployeeDirectory\EmployeeDirectory.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="EmployeeDirectoryMobile">
+        <MSBuild Projects="EmployeeDirectoryMobile\EmployeeDirectoryMobile.dproj"/>
+    </Target>
+    <Target Name="EmployeeDirectoryMobile:Clean">
+        <MSBuild Projects="EmployeeDirectoryMobile\EmployeeDirectoryMobile.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EmployeeDirectoryMobile:Make">
+        <MSBuild Projects="EmployeeDirectoryMobile\EmployeeDirectoryMobile.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="EmployeeDirectory">
+        <MSBuild Projects="EmployeeDirectory\EmployeeDirectory.dproj"/>
+    </Target>
+    <Target Name="EmployeeDirectory:Clean">
+        <MSBuild Projects="EmployeeDirectory\EmployeeDirectory.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EmployeeDirectory:Make">
+        <MSBuild Projects="EmployeeDirectory\EmployeeDirectory.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="EmployeeDirectoryMobile;EmployeeDirectory"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="EmployeeDirectoryMobile:Clean;EmployeeDirectory:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="EmployeeDirectoryMobile:Make;EmployeeDirectory:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

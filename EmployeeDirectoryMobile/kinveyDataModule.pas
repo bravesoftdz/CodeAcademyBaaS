@@ -8,7 +8,8 @@ uses
   REST.Backend.KinveyServices, REST.Backend.Providers,
   REST.Backend.ServiceComponents, REST.Backend.KinveyProvider, REST.Client,
   REST.Authenticator.Basic, Data.Bind.Components, Data.Bind.ObjectScope,
-  REST.Backend.KinveyAPI, REST.Types;
+  REST.Backend.KinveyAPI, REST.Types, REST.Backend.BindSource,
+  System.Generics.Collections, EmployeeTypes;
 
 type
   TKinveyAPIExtend = class(TKinveyAPI)
@@ -22,10 +23,13 @@ type
     RESTClient1: TRESTClient;
     RESTRequest1: TRESTRequest;
     HTTPBasicAuthenticator1: THTTPBasicAuthenticator;
+    storageEmployeeDirectory: TBackendStorage;
+    qryEmployeeDirectory: TBackendQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
     FKinveyAPI: TKinveyAPIExtend;
+    FEmployeeBackendObjects : TBackendObjectList<TEmployee>;
   public
     { Public declarations }
     procedure SignUp(const AUsername, APassword, AFullname, AEmail: string);
@@ -34,6 +38,12 @@ type
     procedure Logout;
 
     procedure ResetPassword(const AUsername: string);
+
+    // 3회차 추가
+    procedure InsertEmployee(AFullName, APhone, AEmail, ADepartment: string);
+    procedure DeleteEmployee(AEmployeeId : String);
+    procedure UpdateEmployee(AOriginalEmployee: TEmployee; AUpdatedEmployee: TEmployee);
+    function GetEmployees : TList<TEmployee>;
   end;
 
 var
@@ -52,7 +62,6 @@ begin
   FKinveyAPI := TKinveyAPIExtend.Create(nil);
   KinveyProvider1.UpdateApi(FKinveyAPI);
 end;
-
 function TdmBaaSUser.Login(const AUsername, APassword: string): Boolean;
 var
   Login: TBackendEntityValue;
@@ -97,6 +106,63 @@ begin
   finally
     UserData.Free;
   end;
+end;
+
+function TdmBaaSUser.GetEmployees: TList<TEmployee>;
+var
+  qryString : TArray<String>;
+  Employee : TEmployee;
+  EmployeeList : TList<TEmployee>;
+begin
+  FEmployeeBackendObjects := TBackendObjectList<TEmployee>.Create;
+
+  qryString := TArray<String>.Create(Format('sort=%s', [TEmployeeMetaData.FullNameColumn]));
+  storageEmployeeDirectory.Storage.QueryObjects<TEmployee>(
+          TEmployeeMetaData.BackendType,
+          qryString,
+          FEmployeeBackendObjects
+  );
+
+  EmployeeList := TList<TEmployee>.Create;
+  for Employee in FEmployeeBackendObjects do
+  begin
+    Employee.Id := FEmployeeBackendObjects.EntityValues[Employee].ObjectID;
+    EmployeeList.Add(Employee);
+  end;
+  Result := EmployeeList;
+end;
+
+procedure TdmBaaSUser.InsertEmployee(AFullName, APhone, AEmail,
+  ADepartment: string);
+var
+  Employee: TEmployee;
+  CreatedObject: TBackendEntityValue;
+begin
+  Employee := TEmployee.Create;
+  Employee.FullName := AFullName;
+  Employee.Department := ADepartment;
+  Employee.Phone := APhone;
+  Employee.Email := AEmail;
+
+  storageEmployeeDirectory.Storage.CreateObject<TEmployee>(
+      TEmployeeMetaData.BackendType,
+      Employee,
+      CreatedObject);
+end;
+
+procedure TdmBaaSUser.DeleteEmployee(AEmployeeId: String);
+begin
+  storageEmployeeDirectory.Storage.DeleteObject(TEmployeeMetaData.BackendType, AEmployeeId);
+end;
+
+procedure TdmBaaSUser.UpdateEmployee(AOriginalEmployee,
+  AUpdatedEmployee: TEmployee);
+var
+  KnvyEmployeeObject: TBackendEntityValue;
+  UpdatedObject: TBackendEntityValue;
+begin
+  KnvyEmployeeObject := FEmployeeBackendObjects.EntityValues[AOriginalEmployee];
+  storageEmployeeDirectory.Storage.UpdateObject<TEmployee>(KnvyEmployeeObject, AUpdatedEmployee, UpdatedObject);
 end;
 
 { TKinveyAPIExtend }

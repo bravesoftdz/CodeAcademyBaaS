@@ -50,4 +50,18 @@ object dmBaaSUser: TdmBaaSUser
     Left = 216
     Top = 328
   end
+  object storageEmployeeDirectory: TBackendStorage
+    Provider = KinveyProvider1
+    Left = 336
+    Top = 136
+  end
+  object qryEmployeeDirectory: TBackendQuery
+    Provider = KinveyProvider1
+    BackendClassName = 'Employees'
+    BackendService = 'Storage'
+    QueryLines.Strings = (
+      'fields=email,fullName')
+    Left = 336
+    Top = 224
+  end
 end

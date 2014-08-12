@@ -4,14 +4,15 @@ uses
   System.StartUpCopy,
   FMX.MobilePreview,
   FMX.Forms,
-  MobileMainForm in 'MobileMainForm.pas' {frmMobileMain},
-  kinveyDataModule in 'kinveyDataModule.pas' {dmBaaSUser: TDataModule};
+  EmployeeTypes in 'EmployeeTypes.pas',
+  kinveyDataModule in 'kinveyDataModule.pas' {dmBaaSUser: TDataModule},
+  MobileMainForm in 'MobileMainForm.pas' {frmMobileMain};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TfrmMobileMain, frmMobileMain);
   Application.CreateForm(TdmBaaSUser, dmBaaSUser);
+  Application.CreateForm(TfrmMobileMain, frmMobileMain);
   Application.Run;
 end.

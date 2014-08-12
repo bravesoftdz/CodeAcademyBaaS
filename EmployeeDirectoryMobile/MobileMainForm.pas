@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
   FMX.Edit, FMX.ListBox, FMX.StdCtrls, FMX.TabControl, System.Actions,
-  FMX.ActnList;
+  FMX.ActnList, FMX.ListView.Types, FMX.ListView,
+  System.Generics.Collections, EmployeeTypes;
 
 type
   TfrmMobileMain = class(TForm)
@@ -46,6 +47,47 @@ type
     lblLoginForgotPassword: TLabel;
     ActionList1: TActionList;
     ChangeTabAction: TChangeTabAction;
+    btnEmployeeBack: TButton;
+    btnEmployeeRefresh: TButton;
+    btnEmployeeAdd: TButton;
+    tabctrlEmplyees: TTabControl;
+    tabitemEmployeeList: TTabItem;
+    tabItemEmployeeDetail: TTabItem;
+    tabitemEmployeeNew: TTabItem;
+    lvEmployees: TListView;
+    lbEmpInfo: TListBox;
+    flNewEmployeeActions: TFlowLayout;
+    btnAddNewEmployee: TButton;
+    btnCancelNewEmployee: TButton;
+    flUpdate: TFlowLayout;
+    btnUpdate: TButton;
+    btnCancelUpdate: TButton;
+    flEditEmployee: TFlowLayout;
+    btnDelete: TButton;
+    btnEdit: TButton;
+    lbiFullName: TListBoxItem;
+    lblFullName: TLabel;
+    lbiEmail: TListBoxItem;
+    edtEmail: TEdit;
+    lblEmail: TLabel;
+    lbiPhoneNumber: TListBoxItem;
+    edtPhoneNumber: TEdit;
+    lblPhoneNumber: TLabel;
+    lbiDept: TListBoxItem;
+    edtDept: TEdit;
+    lblDept: TLabel;
+    lbiID: TListBoxItem;
+    lblID: TLabel;
+    lbNewEmployee: TListBox;
+    ListBoxItem10: TListBoxItem;
+    edtNewFullname: TEdit;
+    ListBoxItem11: TListBoxItem;
+    edtNewEmail: TEdit;
+    ListBoxItem12: TListBoxItem;
+    edtNewPhone: TEdit;
+    ListBoxItem13: TListBoxItem;
+    edtNewDept: TEdit;
+    edtFullName: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure tabctrlLoginChange(Sender: TObject);
     procedure btnLoginGotoRegisterClick(Sender: TObject);
@@ -54,12 +96,37 @@ type
     procedure btnLoginBackClick(Sender: TObject);
     procedure btnRegisterExecClick(Sender: TObject);
     procedure lblLoginForgotPasswordClick(Sender: TObject);
+    procedure tabctrlEmplyeesChange(Sender: TObject);
+    procedure lvEmployeesItemClick(const Sender: TObject;
+      const AItem: TListViewItem);
+    procedure btnEmployeeBackClick(Sender: TObject);
+    procedure btnEmployeeAddClick(Sender: TObject);
+    procedure btnEmployeeRefreshClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
+    procedure btnCancelUpdateClick(Sender: TObject);
+    procedure btnEditClick(Sender: TObject);
+    procedure btnUpdateClick(Sender: TObject);
+    procedure flNewEmployeeActionsClick(Sender: TObject);
+    procedure btnCancelNewEmployeeClick(Sender: TObject);
+    procedure btnAddNewEmployeeClick(Sender: TObject);
   private
     { Private declarations }
+    // 3회차 추가
+    EmployeeList: TList<TEmployee>;
+    CurrentEmployee: TEmployee;
+
     procedure GotoAccountTab;
     procedure GotoEmployeeTab;
     procedure GotoLoginTab;
     procedure GotoRegisterTab;
+
+    // 3회차 추가
+    procedure GotoEmployeeList;
+    procedure GotoEmployeeDetail;
+    procedure GotoEmployeeNew;
+
+    procedure RefreshEmployees;
+    procedure ToggleEditMode(AEditable : Boolean);
   public
     { Public declarations }
   end;
@@ -72,6 +139,73 @@ implementation
 {$R *.fmx}
 
 uses kinveyDataModule;
+
+procedure TfrmMobileMain.FormCreate(Sender: TObject);
+begin
+  // 메인 탭컨트롤 초기화 설정
+  tabctrlMain.ActiveTab := tabitmAccount;
+  tabItmEmployee.Enabled := False;
+
+  // 로그인탭의 탭컨트롤 초기화 설정
+  tabctrlLogin.TabPosition := TTabPosition.None;
+  tabctrlLogin.ActiveTab := tabitmAccountLogin;
+
+  btnLoginBack.Visible := False;
+
+  // 사원정보탭의 탭컨트롤 초기화 설정
+  tabctrlEmplyees.TabPosition := TTabPosition.None;
+  tabctrlEmplyees.ActiveTab := tabitemEmployeeList;
+end;
+
+procedure TfrmMobileMain.btnAddNewEmployeeClick(Sender: TObject);
+begin
+  dmBaaSUser.InsertEmployee(edtNewFullName.Text, edtNewPhone.Text, edtNewEmail.Text, edtNewDept.Text);
+  edtNewFullname.Text := '';
+  edtNewEmail.Text := '';
+  edtNewPhone.Text := '';
+  edtNewDept.Text := '';
+
+  ShowMessage(edtNewFullName.Text + ' 추가');
+  RefreshEmployees;
+  GotoEmployeeList;
+end;
+
+procedure TfrmMobileMain.btnCancelNewEmployeeClick(Sender: TObject);
+begin
+  GotoEmployeeList;
+end;
+
+procedure TfrmMobileMain.btnCancelUpdateClick(Sender: TObject);
+begin
+  ToggleEditMode(False);
+end;
+
+procedure TfrmMobileMain.btnDeleteClick(Sender: TObject);
+begin
+  dmBaaSUser.DeleteEmployee(lblID.Text);
+  RefreshEmployees;
+  GotoEmployeeList;
+end;
+
+procedure TfrmMobileMain.btnEditClick(Sender: TObject);
+begin
+  ToggleEditMode(True);
+end;
+
+procedure TfrmMobileMain.btnEmployeeAddClick(Sender: TObject);
+begin
+  GotoEmployeeNew;
+end;
+
+procedure TfrmMobileMain.btnEmployeeBackClick(Sender: TObject);
+begin
+  GotoEmployeeList;
+end;
+
+procedure TfrmMobileMain.btnEmployeeRefreshClick(Sender: TObject);
+begin
+  RefreshEmployees;
+end;
 
 procedure TfrmMobileMain.btnLoginBackClick(Sender: TObject);
 begin
@@ -99,6 +233,23 @@ begin
   edtRegisterEmail.Text := '';
 end;
 
+procedure TfrmMobileMain.btnUpdateClick(Sender: TObject);
+var
+  UpdatedEmployee : TEmployee;
+begin
+  UpdatedEmployee := TEmployee.Create;
+  UpdatedEmployee.FullName := edtFullName.Text;
+  UpdatedEmployee.Phone := edtPhoneNumber.Text;
+  UpdatedEmployee.Email := edtEmail.Text;
+  UpdatedEmployee.Department := edtDept.Text;
+  dmBaaSUser.UpdateEmployee(CurrentEmployee, UpdatedEmployee);
+
+  flUpdate.Visible := false;
+  RefreshEmployees;
+  GotoEmployeeList;
+  ToggleEditMode(False);
+end;
+
 procedure TfrmMobileMain.btnLogoutClick(Sender: TObject);
 begin
   dmBaaSUser.Logout;
@@ -119,17 +270,9 @@ begin
   edtLoginPassword.Text := '';
 end;
 
-procedure TfrmMobileMain.FormCreate(Sender: TObject);
+procedure TfrmMobileMain.flNewEmployeeActionsClick(Sender: TObject);
 begin
-  // 메인 탭컨트롤 초기화 설정
-  tabctrlMain.ActiveTab := tabitmAccount;
-  tabItmEmployee.Enabled := False;
-
-  // 로그인탭의 탭컨트롤 초기화 설정
-  tabctrlLogin.TabPosition := TTabPosition.None;
-  tabctrlLogin.ActiveTab := tabitmAccountLogin;
-
-  btnLoginBack.Visible := False;
+  GotoEmployeeList;
 end;
 
 procedure TfrmMobileMain.GotoAccountTab;
@@ -146,6 +289,10 @@ begin
   ChangeTabAction.ExecuteTarget(nil);
   tabitmAccount.Enabled := False;
   tabItmEmployee.Enabled := True;
+
+  tabctrlEmplyees.ActiveTab := tabitemEmployeeList;
+  tabctrlEmplyeesChange(nil);
+  RefreshEmployees;
 end;
 
 procedure TfrmMobileMain.GotoLoginTab;
@@ -157,6 +304,24 @@ end;
 procedure TfrmMobileMain.GotoRegisterTab;
 begin
   ChangeTabAction.Tab := tabitmAccountRegister;
+  ChangeTabAction.ExecuteTarget(nil);
+end;
+
+procedure TfrmMobileMain.GotoEmployeeList;
+begin
+  ChangeTabAction.Tab := tabitemEmployeeList;
+  ChangeTabAction.ExecuteTarget(nil);
+end;
+
+procedure TfrmMobileMain.GotoEmployeeDetail;
+begin
+  ChangeTabAction.Tab := tabItemEmployeeDetail;
+  ChangeTabAction.ExecuteTarget(nil);
+end;
+
+procedure TfrmMobileMain.GotoEmployeeNew;
+begin
+  ChangeTabAction.Tab := tabitemEmployeeNew;
   ChangeTabAction.ExecuteTarget(nil);
 end;
 
@@ -172,9 +337,69 @@ begin
   ShowMessage('비밀번호 초기화 요청했습니다. 회원가입 시 등록한 이메일을 확인해 주세요.');
 end;
 
+procedure TfrmMobileMain.lvEmployeesItemClick(const Sender: TObject;
+  const AItem: TListViewItem);
+begin
+  CurrentEmployee := EmployeeList.Items[AItem.Index];
+
+  edtFullName.Text    := CurrentEmployee.FullName;
+  lblFullName.Text    := CurrentEmployee.FullName;
+  edtPhoneNumber.Text := CurrentEmployee.Phone;
+  lblPhoneNumber.Text := CurrentEmployee.Phone;
+  edtEmail.Text       := CurrentEmployee.Email;
+  lblEmail.Text       := CurrentEmployee.Email;
+  edtDept.Text        := CurrentEmployee.Department;
+  lblDept.Text        := CurrentEmployee.Department;
+  lblId.Text          := CurrentEmployee.Id;
+
+  GotoEmployeeDetail;
+  ToggleEditMode(False);
+end;
+
 procedure TfrmMobileMain.tabctrlLoginChange(Sender: TObject);
 begin
   btnLoginBack.Visible := (tabctrlLogin.ActiveTab = tabitmAccountRegister);
+end;
+
+procedure TfrmMobileMain.tabctrlEmplyeesChange(Sender: TObject);
+begin
+  btnEmployeeBack.Visible     := (tabctrlEmplyees.ActiveTab = tabItemEmployeeDetail);
+  btnEmployeeRefresh.Visible  := (tabctrlEmplyees.ActiveTab = tabItemEmployeeList);
+  btnEmployeeAdd.Visible      := (tabctrlEmplyees.ActiveTab = tabItemEmployeeList);
+end;
+
+procedure TfrmMobileMain.RefreshEmployees;
+var
+  I : Integer;
+  Item: TListViewItem;
+begin
+  EmployeeList := dmBaaSUser.GetEmployees;
+  lvEmployees.Items.Clear;
+  for I := 0 to EmployeeList.Count - 1 do
+  begin
+    Item := lvEmployees.Items.Add;
+    Item.Text := EmployeeList.Items[I].FullName;
+  end;
+end;
+
+procedure TfrmMobileMain.ToggleEditMode(AEditable: Boolean);
+begin
+  lblFullName.Visible     := not AEditable;
+  lblPhoneNumber.Visible  := not AEditable;
+  lblEmail.Visible        := not AEditable;
+  lblDept.Visible         := not AEditable;
+
+  edtFullName.Visible     := AEditable;
+  edtPhoneNumber.Visible  := AEditable;
+  edtEmail.Visible        := AEditable;
+  edtDept.Visible         := AEditable;
+
+  flUpdate.Visible := AEditable;
+
+  btnEdit.Enabled := not AEditable;
+  btnDelete.Enabled := not AEditable;
+  btnEmployeeBack.Enabled := not AEditable;
+  btnLogout.Enabled := not AEditable;
 end;
 
 end.
