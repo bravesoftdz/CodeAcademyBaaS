@@ -19,7 +19,7 @@ object frmMobileMain: TfrmMobileMain
     FullSize = True
     Height = 460.000000000000000000
     TabHeight = 49.000000000000000000
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     TabPosition = Bottom
     Width = 320.000000000000000000
@@ -31,7 +31,7 @@ object frmMobileMain: TfrmMobileMain
       IsSelected = False
       TabOrder = 0
       Text = #44228#51221
-      Width = 160.000000000000000000
+      Width = 107.000000000000000000
       object ToolBar2: TToolBar
         Height = 44.000000000000000000
         TabOrder = 0
@@ -92,7 +92,7 @@ object frmMobileMain: TfrmMobileMain
                 Align = Client
                 TabOrder = 0
                 Width = 194.000000000000000000
-                Height = 30.000000000000000000
+                Height = 32.000000000000000000
                 Margins.Left = 120.000000000000000000
                 Margins.Top = 6.000000000000000000
                 Margins.Right = 6.000000000000000000
@@ -112,7 +112,7 @@ object frmMobileMain: TfrmMobileMain
                 Align = Client
                 TabOrder = 0
                 Width = 194.000000000000000000
-                Height = 30.000000000000000000
+                Height = 32.000000000000000000
                 Margins.Left = 120.000000000000000000
                 Margins.Top = 6.000000000000000000
                 Margins.Right = 6.000000000000000000
@@ -181,7 +181,7 @@ object frmMobileMain: TfrmMobileMain
           IsSelected = False
           TabOrder = 0
           Text = #54924#50896#44032#51077
-          Width = 160.000000000000000000
+          Width = 158.000000000000000000
           object ListBox2: TListBox
             Align = Client
             Height = 318.000000000000000000
@@ -294,10 +294,10 @@ object frmMobileMain: TfrmMobileMain
         item
         end>
       Height = 49.000000000000000000
-      IsSelected = True
+      IsSelected = False
       TabOrder = 0
       Text = #49324#50896#51221#48372
-      Width = 160.000000000000000000
+      Width = 107.000000000000000000
       object ToolBar1: TToolBar
         Height = 44.000000000000000000
         TabOrder = 0
@@ -436,8 +436,10 @@ object frmMobileMain: TfrmMobileMain
               Width = 315.000000000000000000
               object edtEmail: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
-                Align = Client
+                Align = Right
                 TabOrder = 0
+                Position.X = 112.000000000000000000
+                Position.Y = 8.000000000000000000
                 Width = 194.000000000000000000
                 Height = 30.000000000000000000
                 Margins.Left = 120.000000000000000000
@@ -465,8 +467,10 @@ object frmMobileMain: TfrmMobileMain
               Width = 315.000000000000000000
               object edtPhoneNumber: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
-                Align = Client
+                Align = Right
                 TabOrder = 1
+                Position.X = 112.000000000000000000
+                Position.Y = 8.000000000000000000
                 Width = 194.000000000000000000
                 Height = 30.000000000000000000
                 Margins.Left = 120.000000000000000000
@@ -494,8 +498,10 @@ object frmMobileMain: TfrmMobileMain
               Width = 315.000000000000000000
               object edtDept: TEdit
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
-                Align = Client
+                Align = Right
                 TabOrder = 1
+                Position.X = 112.000000000000000000
+                Position.Y = 8.000000000000000000
                 Width = 194.000000000000000000
                 Height = 30.000000000000000000
                 Margins.Left = 120.000000000000000000
@@ -544,7 +550,7 @@ object frmMobileMain: TfrmMobileMain
             FlowDirection = LeftToRight
             object btnUpdate: TButton
               Height = 44.000000000000000000
-              Position.X = 55.000000000000000000
+              Position.X = 87.000000000000000000
               TabOrder = 0
               Text = 'Update'
               Width = 73.000000000000000000
@@ -552,7 +558,7 @@ object frmMobileMain: TfrmMobileMain
             end
             object btnCancelUpdate: TButton
               Height = 44.000000000000000000
-              Position.X = 128.000000000000000000
+              Position.X = 160.000000000000000000
               TabOrder = 1
               Text = 'Cancel'
               Width = 73.000000000000000000
@@ -594,7 +600,7 @@ object frmMobileMain: TfrmMobileMain
           IsSelected = False
           TabOrder = 0
           Text = #49324#50896#52628#44032
-          Width = 106.000000000000000000
+          Width = 104.000000000000000000
           object flNewEmployeeActions: TFlowLayout
             Align = Bottom
             Height = 50.000000000000000000
@@ -641,9 +647,9 @@ object frmMobileMain: TfrmMobileMain
                 Align = Right
                 TabOrder = 1
                 Position.X = 120.000000000000000000
-                Position.Y = 7.000000000000000000
+                Position.Y = 6.000000000000000000
                 Width = 194.000000000000000000
-                Height = 30.000000000000000000
+                Height = 32.000000000000000000
                 Margins.Left = 120.000000000000000000
                 Margins.Top = 6.000000000000000000
                 Margins.Right = 6.000000000000000000
@@ -662,9 +668,9 @@ object frmMobileMain: TfrmMobileMain
                 Align = Right
                 TabOrder = 0
                 Position.X = 120.000000000000000000
-                Position.Y = 7.000000000000000000
+                Position.Y = 6.000000000000000000
                 Width = 194.000000000000000000
-                Height = 30.000000000000000000
+                Height = 32.000000000000000000
                 Margins.Left = 120.000000000000000000
                 Margins.Top = 6.000000000000000000
                 Margins.Right = 6.000000000000000000
@@ -683,9 +689,9 @@ object frmMobileMain: TfrmMobileMain
                 Align = Right
                 TabOrder = 1
                 Position.X = 120.000000000000000000
-                Position.Y = 7.000000000000000000
+                Position.Y = 6.000000000000000000
                 Width = 194.000000000000000000
-                Height = 30.000000000000000000
+                Height = 32.000000000000000000
                 Margins.Left = 120.000000000000000000
                 Margins.Top = 6.000000000000000000
                 Margins.Right = 6.000000000000000000
@@ -704,9 +710,9 @@ object frmMobileMain: TfrmMobileMain
                 Align = Right
                 TabOrder = 1
                 Position.X = 120.000000000000000000
-                Position.Y = 7.000000000000000000
+                Position.Y = 6.000000000000000000
                 Width = 194.000000000000000000
-                Height = 30.000000000000000000
+                Height = 32.000000000000000000
                 Margins.Left = 120.000000000000000000
                 Margins.Top = 6.000000000000000000
                 Margins.Right = 6.000000000000000000
@@ -717,12 +723,53 @@ object frmMobileMain: TfrmMobileMain
         end
       end
     end
+    object tabitmPushEvent: TTabItem
+      CustomIcon = <
+        item
+        end>
+      Height = 49.000000000000000000
+      IsSelected = True
+      TabOrder = 0
+      Text = #54392#49884#51060#48292#53944
+      Width = 106.000000000000000000
+      object Memo1: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        Align = Client
+        Height = 362.000000000000000000
+        TabOrder = 0
+        Width = 320.000000000000000000
+      end
+      object CheckBox1: TCheckBox
+        Align = Top
+        Height = 49.000000000000000000
+        TabOrder = 1
+        Text = 'Active'
+        Width = 320.000000000000000000
+        OnChange = CheckBox1Change
+      end
+    end
   end
   object ActionList1: TActionList
-    Left = 264
-    Top = 296
+    Left = 248
+    Top = 288
     object ChangeTabAction: TChangeTabAction
       Category = 'Tab'
     end
+  end
+  object PushEvents1: TPushEvents
+    Provider = dmBaaSUser.KinveyProvider1
+    AutoActivate = False
+    OnDeviceTokenReceived = PushEvents1DeviceTokenReceived
+    OnDeviceTokenRequestFailed = PushEvents1DeviceTokenRequestFailed
+    OnPushReceived = PushEvents1PushReceived
+    OnDeviceRegistered = PushEvents1DeviceRegistered
+    Left = 248
+    Top = 216
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 244
+    Top = 149
   end
 end

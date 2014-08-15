@@ -8,6 +8,9 @@ object dmBaaSUser: TdmBaaSUser
     AppKey = 'kid_PeJlaHOaeC'
     AppSecret = '0f6219bedafa4dd3a8edd175ec4c6dd9'
     MasterSecret = '3fd605b1ca3f4a71b883ed7fdc4e3515'
+    UserName = 'testuser'
+    Password = 'test1234'
+    AndroidPush.GCMAppID = '518526292750'
     Left = 96
     Top = 32
   end

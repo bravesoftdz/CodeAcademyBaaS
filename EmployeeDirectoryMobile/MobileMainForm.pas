@@ -7,7 +7,11 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
   FMX.Edit, FMX.ListBox, FMX.StdCtrls, FMX.TabControl, System.Actions,
   FMX.ActnList, FMX.ListView.Types, FMX.ListView,
-  System.Generics.Collections, EmployeeTypes;
+  System.Generics.Collections, EmployeeTypes, IPPeerClient,
+  REST.Backend.PushTypes, System.JSON, REST.Backend.KinveyPushDevice,
+  System.PushNotification, Data.Bind.EngExt, Fmx.Bind.DBEngExt,
+  Data.Bind.Components, FMX.Memo, Data.Bind.ObjectScope,
+  REST.Backend.BindSource, REST.Backend.PushDevice;
 
 type
   TfrmMobileMain = class(TForm)
@@ -88,6 +92,11 @@ type
     ListBoxItem13: TListBoxItem;
     edtNewDept: TEdit;
     edtFullName: TEdit;
+    tabitmPushEvent: TTabItem;
+    PushEvents1: TPushEvents;
+    Memo1: TMemo;
+    BindingsList1: TBindingsList;
+    CheckBox1: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure tabctrlLoginChange(Sender: TObject);
     procedure btnLoginGotoRegisterClick(Sender: TObject);
@@ -109,6 +118,12 @@ type
     procedure flNewEmployeeActionsClick(Sender: TObject);
     procedure btnCancelNewEmployeeClick(Sender: TObject);
     procedure btnAddNewEmployeeClick(Sender: TObject);
+    procedure PushEvents1DeviceRegistered(Sender: TObject);
+    procedure PushEvents1DeviceTokenReceived(Sender: TObject);
+    procedure PushEvents1DeviceTokenRequestFailed(Sender: TObject;
+      const AErrorMessage: string);
+    procedure PushEvents1PushReceived(Sender: TObject; const AData: TPushData);
+    procedure CheckBox1Change(Sender: TObject);
   private
     { Private declarations }
     // 3회차 추가
@@ -139,7 +154,6 @@ implementation
 {$R *.fmx}
 
 uses kinveyDataModule;
-
 procedure TfrmMobileMain.FormCreate(Sender: TObject);
 begin
   // 메인 탭컨트롤 초기화 설정
@@ -250,6 +264,11 @@ begin
   ToggleEditMode(False);
 end;
 
+procedure TfrmMobileMain.CheckBox1Change(Sender: TObject);
+begin
+  PushEvents1.Active := TCheckBox(Sender).IsChecked;
+end;
+
 procedure TfrmMobileMain.btnLogoutClick(Sender: TObject);
 begin
   dmBaaSUser.Logout;
@@ -317,7 +336,7 @@ procedure TfrmMobileMain.GotoEmployeeDetail;
 begin
   ChangeTabAction.Tab := tabItemEmployeeDetail;
   ChangeTabAction.ExecuteTarget(nil);
-end;
+end;
 
 procedure TfrmMobileMain.GotoEmployeeNew;
 begin
@@ -401,5 +420,34 @@ begin
   btnEmployeeBack.Enabled := not AEditable;
   btnLogout.Enabled := not AEditable;
 end;
+
+procedure TfrmMobileMain.PushEvents1DeviceRegistered(Sender: TObject);
+begin
+  Memo1.Lines.Add('장치 등록!');
+  Memo1.Lines.Add('');
+end;
+
+procedure TfrmMobileMain.PushEvents1DeviceTokenReceived(Sender: TObject);
+begin
+  Memo1.Lines.Add('장치 토큰 수신!');
+  Memo1.Lines.Add('');
+end;
+
+procedure TfrmMobileMain.PushEvents1DeviceTokenRequestFailed(Sender: TObject;
+  const AErrorMessage: string);
+begin
+  Memo1.Lines.Add('장치 토큰 수신 실패!');
+  Memo1.Lines.Add(AErrorMessage);
+  Memo1.Lines.Add('');
+end;
+
+procedure TfrmMobileMain.PushEvents1PushReceived(Sender: TObject;
+  const AData: TPushData);
+begin
+  Memo1.Lines.Add('푸시 데이터 수신');
+  Memo1.Lines.Add(AData.Message);
+  Memo1.Lines.Add('');
+end;
+
 
 end.

@@ -9,6 +9,9 @@
         <Projects Include="EmployeeDirectory\EmployeeDirectory.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="VCLPushMessageSender\VCLPushMessageSender.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="EmployeeDirectory:Make">
         <MSBuild Projects="EmployeeDirectory\EmployeeDirectory.dproj" Targets="Make"/>
     </Target>
+    <Target Name="VCLPushMessageSender">
+        <MSBuild Projects="VCLPushMessageSender\VCLPushMessageSender.dproj"/>
+    </Target>
+    <Target Name="VCLPushMessageSender:Clean">
+        <MSBuild Projects="VCLPushMessageSender\VCLPushMessageSender.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VCLPushMessageSender:Make">
+        <MSBuild Projects="VCLPushMessageSender\VCLPushMessageSender.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="EmployeeDirectoryMobile;EmployeeDirectory"/>
+        <CallTarget Targets="EmployeeDirectoryMobile;EmployeeDirectory;VCLPushMessageSender"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="EmployeeDirectoryMobile:Clean;EmployeeDirectory:Clean"/>
+        <CallTarget Targets="EmployeeDirectoryMobile:Clean;EmployeeDirectory:Clean;VCLPushMessageSender:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="EmployeeDirectoryMobile:Make;EmployeeDirectory:Make"/>
+        <CallTarget Targets="EmployeeDirectoryMobile:Make;EmployeeDirectory:Make;VCLPushMessageSender:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
