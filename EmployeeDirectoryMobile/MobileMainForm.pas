@@ -11,7 +11,8 @@ uses
   REST.Backend.PushTypes, System.JSON, REST.Backend.KinveyPushDevice,
   System.PushNotification, Data.Bind.EngExt, Fmx.Bind.DBEngExt,
   Data.Bind.Components, FMX.Memo, Data.Bind.ObjectScope,
-  REST.Backend.BindSource, REST.Backend.PushDevice;
+  REST.Backend.BindSource, REST.Backend.PushDevice, FMX.ScrollBox,
+  FMX.Controls.Presentation;
 
 type
   TfrmMobileMain = class(TForm)
